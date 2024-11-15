@@ -1,24 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const Task = require('../models/Task');
+const TaskController = require('../controllers/TaskController'); // Importa o controlador de tarefas
 
-router.post('/', async (req, res) => {
-  try {
-    const task = await Task.create(req.body);
-    res.status(201).json(task);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+// Rota para criar uma tarefa
+router.post('/', TaskController.createTask);
 
+// Rota para obter todas as tarefas
+router.get('/', TaskController.getTasks);
 
-router.get('/', async (req, res) => {
-  try {
-    const tasks = await Task.findAll();
-    res.json(tasks);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// Rota para atualizar uma tarefa
+router.put('/:id', TaskController.updateTask);
+
+// Rota para deletar uma tarefa
+router.delete('/:id', TaskController.deleteTask);
 
 module.exports = router;

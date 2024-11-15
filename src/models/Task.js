@@ -1,20 +1,28 @@
-const { DataTypes } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Task = sequelize.define('Task', {
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false
+class Task extends Model {}
+
+Task.init(
+  {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  status: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: 'pendente'
+  {
+    sequelize,
+    modelName: 'Task',
+    tableName: 'tasks', 
   }
-});
+);
 
 module.exports = Task;
